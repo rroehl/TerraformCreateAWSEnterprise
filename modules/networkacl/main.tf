@@ -65,7 +65,7 @@ resource "aws_network_acl" "CreateNetworkAcls" {
         }
     )
     tags = {
-        Name = each.value.network_acl_name 
+        Name = format("%s%s",each.value.vpc_name,each.value.network_acl_name) 
         Description = each.value.description
         Region = each.value.vpc_region_name
         VPC = each.value.vpc_name
