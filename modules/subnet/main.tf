@@ -24,32 +24,6 @@ module "enterprise_config_module" {
     //module.enterprise_config.enterprise_config 
 }
 
-# Create Subnets
-resource "aws_subnet" "create_subnets" {
-//depends_on = [aws_vpc_ipv4_cidr_block_association.secondary_cidr]   //local.vpc_depends_on] 
-
-  for_each = {
-    for subnet in local.vpc_network_subnets :  "${subnet.vpc_name}.${subnet.az_name}.${subnet.cidr_block}" => subnet if subnet.vpc_region_name == var.vpc_region
-    }
-  //vpc_id = lookup(aws_vpc.this, "${each.value.vpc_name}").id 
-  vpc_id = [for key, obj in values(data.aws_vpc.selected).*: obj.id  if obj.tags.uuid== "${each.value.vpc_uuid}"][0] 
-
-  cidr_block =  each.value.cidr_block
-  availability_zone = each.value.az_name
-  map_public_ip_on_launch = false
-
-  tags = {
-      Name = join( " ", ["${each.key}"])
-      CIDR_block = each.value.cidr_block
-      "Environment_Type" =  each.value.vpc_environment_type
-      "Subnet Class_Type"  = each.value.sn_class_type
-      "uuid"  = each.value.sn_uuid
-      "Availability_Zone" = each.value.az_name
-      "VPC" = each.value.vpc_name
-      "Date_created" = formatdate("DD MMM YYYY hh:mm ZZZ", timestamp())
-  } 
-}
-
 # Get the Subnets info from map
 locals {
   // outer map key: vpc Name
@@ -81,3 +55,30 @@ locals {
     ]
   ])
 }
+
+# Create Subnets
+resource "aws_subnet" "create_subnets" {
+//depends_on = [aws_vpc_ipv4_cidr_block_association.secondary_cidr]   //local.vpc_depends_on] 
+
+  for_each = {
+    for subnet in local.vpc_network_subnets :  "${subnet.vpc_name}.${subnet.az_name}.${subnet.cidr_block}" => subnet if subnet.vpc_region_name == var.vpc_region
+    }
+  //vpc_id = lookup(aws_vpc.this, "${each.value.vpc_name}").id 
+  vpc_id = [for key, obj in values(data.aws_vpc.selected).*: obj.id  if obj.tags.uuid== "${each.value.vpc_uuid}"][0] 
+
+  cidr_block =  each.value.cidr_block
+  availability_zone = each.value.az_name
+  map_public_ip_on_launch = false
+
+  tags = {
+      Name = join( " ", ["${each.key}"])
+      CIDR_block = each.value.cidr_block
+      "Environment_Type" =  each.value.vpc_environment_type
+      "Subnet Class_Type"  = each.value.sn_class_type
+      "uuid"  = each.value.sn_uuid
+      "Availability_Zone" = each.value.az_name
+      "VPC" = each.value.vpc_name
+      "Date_created" = formatdate("DD MMM YYYY hh:mm ZZZ", timestamp())
+  } 
+}
+

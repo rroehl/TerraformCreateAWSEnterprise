@@ -79,21 +79,22 @@ variable "enterprise_config" {
                         object({                                # security group Lists
                             description = string
                             sg_uuid = string  //Security group UUID
-                            ingress = object({ 
+                            ingress_obj_list = map ( object({ 
                                description      = string
                                from_port        = number
                                to_port          = number
                                protocol         = string
-                               cidr_blocks     = list(string)
+                               cidr_ipv4        = string
                                //ipv6_cidr_blocks = list(string)
-                            })
-                            egress = object({ 
+                            })  )
+                            egress_obj_list = map( object({ 
+                                description      = string
                                 from_port        = number
                                 to_port          = number
                                 protocol         = string 
-                                cidr_blocks     = list(string)
+                                cidr_ipv4        = string
                                 //ipv6_cidr_blocks = list(string)
-                            })
+                            })  )
                         })
                     )
 
@@ -255,39 +256,49 @@ variable "enterprise_config" {
                         ProdVPCpublicsg1 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "b5c9d053-da6b-4afd-9ae2-f40f1f775430" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.0.0/24","10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
-                               // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.0.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //ipv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                }
                             } 
                         },
                         ProdVPCprivatesg2 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "dbdf79b0-e2ae-4eed-9259-91e7b53cc5ad" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.4.0/24","10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
-                                //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        = "10.51.4.0/24"    //,"10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
+                                    //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //pv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //pv6_cidr_blocks = ["::/0"]
+                                }
                             }
                         }       
                     }	
@@ -407,39 +418,49 @@ variable "enterprise_config" {
                         publicsg1 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "4068ee91-7e6a-4fa0-9b1b-380104b18748" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.0.0/24","10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
-                               // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.0.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //ipv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                }
                             } 
                         },
                         privatesg2 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "170df5cd-5c85-452f-8e88-d905aa619539" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.4.0/24","10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
-                                //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4     = "10.51.4.0/24"    //,"10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
+                                    //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //pv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //pv6_cidr_blocks = ["::/0"]
+                                }
                             }
                         }
                             
@@ -551,39 +572,49 @@ variable "enterprise_config" {
                         DevVPCpublicsg1 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "bdf91a9d-92b2-4687-8ed2-d007218713d6" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.0.0/24","10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
-                               // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.0.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //ipv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                }
                             } 
                         },
                         DevVPCprivatesg2 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "98817914-7dca-4ef7-8594-7d0b0ffeefcd" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.4.0/24","10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
-                                //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4     = "10.51.4.0/24"    //,"10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
+                                    //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //pv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //pv6_cidr_blocks = ["::/0"]
+                                }
                             }
                         }
                             
@@ -695,39 +726,49 @@ variable "enterprise_config" {
                         SharedServiceVPCpublicsg1 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "235fcdfd-8349-4ded-abe3-2b35886eebb2" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.0.0/24","10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
-                               // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.0.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //ipv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                }
                             } 
                         },
                         SharedServiceVPCprivatesg2 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "c80621f9-f8e8-4a79-88d9-d2321564862f" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.4.0/24","10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
-                                //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4     = "10.51.4.0/24"    //,"10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
+                                    //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //pv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //pv6_cidr_blocks = ["::/0"]
+                                }
                             }
                         }
                             
@@ -815,39 +856,49 @@ variable "enterprise_config" {
                         SandBoxVPCpublicsg1 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "81ae81e7-1f56-43e1-a152-e7b7dd092aff" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.0.0/24","10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
-                               // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.0.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //ipv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                }
                             } 
                         },
                         SandBoxVPCprivatesg2 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "f360e344-6dfc-424b-9ca8-c4e8ac439724" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.4.0/24","10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
-                                //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4     = "10.51.4.0/24"    //,"10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
+                                    //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //pv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //pv6_cidr_blocks = ["::/0"]
+                                }
                             }
                         }        
                     }
@@ -1159,12 +1210,12 @@ variable "enterprise_config" {
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other public networks in the Prod VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.57.0.0/16" //Production public CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.57.0.0/16" //Production public CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         } ,
@@ -1174,22 +1225,22 @@ variable "enterprise_config" {
                             subnet_type = "Private"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other private networks in the Prod VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.58.0.0/16" //Production private CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.58.0.0/16" //Production private CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other private networks in the Prod VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.58.0.0/16" //Production private CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.58.0.0/16" //Production private CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         },
@@ -1209,12 +1260,12 @@ variable "enterprise_config" {
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other network networks in the Prod VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.59.0.0/16" //Production network CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.59.0.0/16" //Production network CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         } 
@@ -1223,41 +1274,68 @@ variable "enterprise_config" {
                     security_groups_list_info=  {  # VPC Security groups 
 
                         ProdVPCpublicsg1 = {
-                            description = "Allow TLS inbound traffic"
+                            description = "VPC Allow TLS inbound traffic"
                             sg_uuid = "62b497ca-b410-4069-acca-f2729ff445e0" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.0.0/24","10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
-                               // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "Prod VPC 1-- TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.0.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                },
+                                
+                                
+                                ingress_rule2 = {
+                                    description      = "Prod VPC 2-- TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.1.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                }
+
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //ipv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "1Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                },
+                                egress_rule2 = { 
+                                    description      = "2Egress description"
+                                    from_port        = 0
+                                    to_port          = 20
+                                    protocol         = "tcp"
+                                    cidr_ipv4        = "10.53.0.0/24"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                }
                             } 
                         },
                         ProdVPCprivatesg2 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "ec40a007-94e7-4db9-8b5c-ce6fb9ec8944" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.4.0/24","10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
-                                //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4     = "10.51.4.0/24"    //,"10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
+                                    //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //pv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //pv6_cidr_blocks = ["::/0"]
+                                }
                             }
                         }   
                     }
@@ -1418,12 +1496,12 @@ variable "enterprise_config" {
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other public networks in the Test VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.60.0.0/16" //Test public CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.60.0.0/16" //Test public CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         } ,
@@ -1433,22 +1511,22 @@ variable "enterprise_config" {
                             subnet_type = "Private"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other private networks in the Test VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.61.0.0/16" //Test private CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.61.0.0/16" //Test private CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other private networks in the Test VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.61.0.0/16" //Test private CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.61.0.0/16" //Test private CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         },
@@ -1458,22 +1536,22 @@ variable "enterprise_config" {
                             subnet_type = "Network"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other network networks in the Test VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.62.0.0/16" //Test network CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.62.0.0/16" //Test network CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other network networks in the Test VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.62.0.0/16" //Test network CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.62.0.0/16" //Test network CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         } 
@@ -1485,39 +1563,49 @@ variable "enterprise_config" {
                         TestVPCpublicsg1 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "58e1f73c-9981-42af-b086-ece883602b71" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.0.0/24","10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
-                               // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.0.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //ipv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                }
                             } 
                         },
                         TestVPCprivatesg2 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "02a7e4d6-41fe-48b8-a720-02d8a7303492" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.4.0/24","10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
-                                //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4     = "10.51.4.0/24"    //,"10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
+                                    //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //pv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //pv6_cidr_blocks = ["::/0"]
+                                }
                             }
                         }          
                     }
@@ -1638,22 +1726,22 @@ variable "enterprise_config" {
                             subnet_type = "Public"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other public networks in the Dev VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.63.0.0/16" //Dev public CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.63.0.0/16" //Dev public CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other public networks in the Dev VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.63.0.0/16" //Dev public CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.63.0.0/16" //Dev public CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         } ,
@@ -1663,22 +1751,22 @@ variable "enterprise_config" {
                             subnet_type = "Private"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other private networks in the Dev VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.64.0.0/16" //Dev private CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.64.0.0/16" //Dev private CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other private networks in the Dev VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.64.0.0/16" //Dev private CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.64.0.0/16" //Dev private CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         },
@@ -1688,22 +1776,22 @@ variable "enterprise_config" {
                             subnet_type = "Network"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other network networks in the Dev VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.65.0.0/16" //Dev network CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.65.0.0/16" //Dev network CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other network networks in the Dev VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.65.0.0/16" //Dev network CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.65.0.0/16" //Dev network CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         } 
@@ -1715,39 +1803,49 @@ variable "enterprise_config" {
                         DevVPCpublicsg1 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "37a4579d-4313-4608-8c81-32386961cfbc" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.0.0/24","10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
-                               // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.0.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //ipv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                }
                             } 
                         },
                         DevVPCprivatesg2 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "78848602-061b-47b9-97a8-4e303d4fc020" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.4.0/24","10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
-                                //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4     = "10.51.4.0/24"    //,"10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
+                                    //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //pv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //pv6_cidr_blocks = ["::/0"]
+                                }
                             }
                         }
                             
@@ -1856,22 +1954,22 @@ variable "enterprise_config" {
                             subnet_type = "Public"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other public networks in the SharedService VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.66.0.0/16" //SharedService public CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.66.0.0/16" //SharedService public CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other public networks in the SharedService VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.66.0.0/16" //SharedService public CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.66.0.0/16" //SharedService public CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         } ,
@@ -1881,22 +1979,22 @@ variable "enterprise_config" {
                             subnet_type = "Private"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other private networks in the Dev VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.67.0.0/16" //SharedService private CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.67.0.0/16" //SharedService private CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other private networks in the SharedService VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.67.0.0/16" //SharedService private CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.67.0.0/16" //SharedService private CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         },
@@ -1906,22 +2004,22 @@ variable "enterprise_config" {
                             subnet_type = "Network"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other network networks in the SharedService VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.68.0.0/16" //SharedService network CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.68.0.0/16" //SharedService network CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other network networks in the SharedService VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.68.0.0/16" //SharedService network CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.68.0.0/16" //SharedService network CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         } 
@@ -1933,39 +2031,49 @@ variable "enterprise_config" {
                         SharedServiceVPCpublicsg1 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "689c574c-f90a-4822-bda9-09ba9cd34211" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.0.0/24","10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
-                               // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.0.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //ipv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                }
                             } 
                         },
                         SharedServiceVPCprivatesg2 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "a36806c5-93c8-40e9-8bcc-c74c3bf5ef2f" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.4.0/24","10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
-                                //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4     = "10.51.4.0/24"    //,"10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
+                                    //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //pv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //pv6_cidr_blocks = ["::/0"]
+                                }
                             }
                         }
                             
@@ -2062,22 +2170,22 @@ variable "enterprise_config" {
                             subnet_type = "Public"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other public networks in the SharedService VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.69.0.0/16" //SharedService public CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.69.0.0/16" //SharedService public CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other public networks in the SharedService VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.69.0.0/16" //SharedService public CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.69.0.0/16" //SharedService public CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         } ,
@@ -2087,22 +2195,22 @@ variable "enterprise_config" {
                             subnet_type = "Private"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other private networks in the Dev VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.70.0.0/16" //SharedService private CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.70.0.0/16" //SharedService private CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other private networks in the SharedService VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.70.0.0/16" //SharedService private CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.70.0.0/16" //SharedService private CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         },
@@ -2112,26 +2220,25 @@ variable "enterprise_config" {
                             subnet_type = "Network"  //Has to match the subnet type name on the subnet
                             ingress_obj_list = {  // 
                                 ingress_rule1 = { //Allow all traffic inbound from other network networks in the SharedService VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.71.0.0/16" //SharedService network CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.71.0.0/16" //SharedService network CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                             egress_obj_list = {
                                 egress_rule1 = {  //Allow all traffic outbound from other network networks in the SharedService VPC
-                                protocol   = "-1"
-                                rule_no    = 100
-                                action     = "allow"
-                                cidr_block = "10.71.0.0/16" //SharedService network CIDR
-                                from_port  = 0
-                                to_port    = 0
+                                    protocol   = "-1"
+                                    rule_no    = 100
+                                    action     = "allow"
+                                    cidr_block = "10.71.0.0/16" //SharedService network CIDR
+                                    from_port  = 0
+                                    to_port    = 0
                                 }
                             }
                         } 
-
                     }                        
 
                     security_groups_list_info=  {  # VPC Security groups 
@@ -2139,39 +2246,49 @@ variable "enterprise_config" {
                         SandBoxVPCpublicsg1 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "686e8aed-46b2-4b4d-a56c-2d8659a91b34" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.0.0/24","10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
-                               // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4        =  "10.51.0.0/24"        //,"10.51.1.0/24","10.51.2.0/24","10.51.3.0/24"]
+                                // ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //ipv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //ipv6_cidr_blocks = ["::/0"]
+                                }
                             } 
                         },
                         SandBoxVPCprivatesg2 = {
                             description = "Allow TLS inbound traffic"
                             sg_uuid = "1c0c3033-dd4e-4cc9-a28a-028116cf7550" //SG UUID
-                            ingress = {
-                                description      = "TLS from VPC"
-                                from_port        = 443
-                                to_port          = 443
-                                protocol         = "tcp"
-                                cidr_blocks      = ["10.51.4.0/24","10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
-                                //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                            ingress_obj_list = {
+                                ingress_rule1 = {
+                                    description      = "TLS from VPC"
+                                    from_port        = 443
+                                    to_port          = 443
+                                    protocol         = "tcp"
+                                    cidr_ipv4     = "10.51.4.0/24"    //,"10.51.5.0/24",  "10.51.6.0/24","10.51.7.0/24", "10.51.8.0/24"]
+                                    //ipv6_cidr_blocks = [aws_vpc.main.ipv6_cidr_block]
+                                }
                             }   
-                            egress = {
-                                from_port        = 0
-                                to_port          = 0
-                                protocol         = "-1"
-                                cidr_blocks      = ["0.0.0.0/0"]
-                                //pv6_cidr_blocks = ["::/0"]
+                            egress_obj_list = {
+                                egress_rule1 = { 
+                                    description      = "Egress description"
+                                    from_port        = 0
+                                    to_port          = 0
+                                    protocol         = "-1"
+                                    cidr_ipv4        = "0.0.0.0/0"
+                                    //pv6_cidr_blocks = ["::/0"]
+                                }
                             }
                         }                           
                     }
