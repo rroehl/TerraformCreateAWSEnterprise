@@ -88,12 +88,14 @@ resource "aws_default_route_table" "this" {
 }
 
 #Update default security group for VPCs
+
 resource "aws_default_security_group" "this" {
 
   for_each = {
     for vpc in local.vpcs :  "${vpc.vpc_name}" => vpc if vpc.region_name == var.vpc_region
     }
     vpc_id = lookup(aws_vpc.this, "${each.value.vpc_name}").id 
+
 
     tags = {
       "Name"     = format("Default-%s-SG", each.value.vpc_name)
