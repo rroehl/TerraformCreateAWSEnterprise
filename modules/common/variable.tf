@@ -36,7 +36,7 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = bool
                     vpc_uuid = string        //Resource UUID
                     default_rt_uuid = string //Default route table UUID
-                    default_sg_uuid = string //Default security group UUID
+    
                     default_netacl_uuid = string //Default network acl UUID
 				/*	vpc_instance_tenancy = string
 					vpc_enable_classiclink_dns_support = bool
@@ -74,6 +74,28 @@ variable "enterprise_config" {
 
                         })
                     )   
+
+                    default_security_group_info = object({                                # VPC default Security group # security group Lists
+                            default_sg_uuid     = string    // Default Security Group UUID
+                            ingress_obj_list = map ( object({ 
+                               description      = string
+                               from_port        = number
+                               to_port          = number
+                               protocol         = string
+                               cidr_ipv4        = string
+                               //ipv6_cidr_blocks = list(string)
+                            })  )
+
+                            egress_obj_list = map( object({ 
+                                description      = string
+                                from_port        = number
+                                to_port          = number
+                                protocol         = string 
+                                cidr_ipv4        = string
+                                //ipv6_cidr_blocks = list(string)
+                            })  )
+
+                        })
 
                     security_groups_list_info =   map(     	    # VPC Security groups 
                         object({                                # security group Lists
@@ -250,6 +272,28 @@ variable "enterprise_config" {
                     network_acls_list_info = {
                     }      
              
+                    default_security_group_info =  {  # VPC default Security group
+                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        ingress_obj_list = {
+                            ingress_rule1 = {
+                                description      = "Ingress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = -1
+                                cidr_ipv4        = "0.0.0.0/0" 
+                            }
+                        }   
+                        egress_obj_list = {
+                            egress_rule1 = { 
+                                description      = "Egress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = "-1"
+                                cidr_ipv4        = "0.0.0.0/0"
+                                //ipv6_cidr_blocks = ["::/0"]
+                            }
+                        }  
+                    }              
 
                     security_groups_list_info=  {  # VPC Security groups 
 
@@ -411,7 +455,30 @@ variable "enterprise_config" {
 
                     }    
                     network_acls_list_info = {
-                    }                      
+                    }  
+
+                    default_security_group_info =  {  # VPC default Security group
+                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        ingress_obj_list = {
+                            ingress_rule1 = {
+                                description      = "Ingress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = -1
+                                cidr_ipv4        = "0.0.0.0/0" 
+                            }
+                        }   
+                        egress_obj_list = {
+                            egress_rule1 = { 
+                                description      = "Egress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = "-1"
+                                cidr_ipv4        = "0.0.0.0/0"
+                                //ipv6_cidr_blocks = ["::/0"]
+                            }
+                        }  
+                    }                    
 
                     security_groups_list_info=  {  # VPC Security groups 
 
@@ -565,7 +632,30 @@ variable "enterprise_config" {
 
                     }    
                     network_acls_list_info = {
-                    }                      
+                    }
+ 
+                    default_security_group_info =  {  # VPC default Security group
+                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        ingress_obj_list = {
+                            ingress_rule1 = {
+                                description      = "Ingress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = -1
+                                cidr_ipv4        = "0.0.0.0/0" 
+                            }
+                        }   
+                        egress_obj_list = {
+                            egress_rule1 = { 
+                                description      = "Egress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = "-1"
+                                cidr_ipv4        = "0.0.0.0/0"
+                                //ipv6_cidr_blocks = ["::/0"]
+                            }
+                        }  
+                    }                       
 
                     security_groups_list_info=  {  # VPC Security groups 
 
@@ -719,7 +809,30 @@ variable "enterprise_config" {
 
                     }    
                     network_acls_list_info = {
-                    }                      
+                    } 
+
+                    default_security_group_info =  {  # VPC default Security group
+                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        ingress_obj_list = {
+                            ingress_rule1 = {
+                                description      = "Ingress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = -1
+                                cidr_ipv4        = "0.0.0.0/0" 
+                            }
+                        }   
+                        egress_obj_list = {
+                            egress_rule1 = { 
+                                description      = "Egress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = "-1"
+                                cidr_ipv4        = "0.0.0.0/0"
+                                //ipv6_cidr_blocks = ["::/0"]
+                            }
+                        }  
+                    }                       
 
                     security_groups_list_info=  {  # VPC Security groups 
 
@@ -849,7 +962,30 @@ variable "enterprise_config" {
 
                     }    
                     network_acls_list_info = {
-                    }                      
+                    }   
+
+                    default_security_group_info =  {  # VPC default Security group
+                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        ingress_obj_list = {
+                            ingress_rule1 = {
+                                description      = "Ingress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = -1
+                                cidr_ipv4        = "0.0.0.0/0" 
+                            }
+                        }   
+                        egress_obj_list = {
+                            egress_rule1 = { 
+                                description      = "Egress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = "-1"
+                                cidr_ipv4        = "0.0.0.0/0"
+                                //ipv6_cidr_blocks = ["::/0"]
+                            }
+                        }  
+                    }                    
 
                     security_groups_list_info=  {  # VPC Security groups 
 
@@ -1269,7 +1405,30 @@ variable "enterprise_config" {
                                 }
                             }
                         } 
-                    }                    
+                    }       
+
+                    default_security_group_info =  {  # VPC default Security group
+                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        ingress_obj_list = {
+                            ingress_rule1 = {
+                                description      = "Ingress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = -1
+                                cidr_ipv4        = "0.0.0.0/0" 
+                            }
+                        }   
+                        egress_obj_list = {
+                            egress_rule1 = { 
+                                description      = "Egress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = "-1"
+                                cidr_ipv4        = "0.0.0.0/0"
+                                //ipv6_cidr_blocks = ["::/0"]
+                            }
+                        }  
+                    } 
 
                     security_groups_list_info=  {  # VPC Security groups 
 
@@ -1558,6 +1717,29 @@ variable "enterprise_config" {
 
                     }  
 
+                    default_security_group_info =  {  # VPC default Security group
+                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        ingress_obj_list = {
+                            ingress_rule1 = {
+                                description      = "Ingress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = -1
+                                cidr_ipv4        = "0.0.0.0/0" 
+                            }
+                        }   
+                        egress_obj_list = {
+                            egress_rule1 = { 
+                                description      = "Egress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = "-1"
+                                cidr_ipv4        = "0.0.0.0/0"
+                                //ipv6_cidr_blocks = ["::/0"]
+                            }
+                        }  
+                    } 
+
                     security_groups_list_info=  {  # VPC Security groups 
 
                         TestVPCpublicsg1 = {
@@ -1795,7 +1977,29 @@ variable "enterprise_config" {
                                 }
                             }
                         } 
+                    } 
 
+                    default_security_group_info =  {  # VPC default Security group
+                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        ingress_obj_list = {
+                            ingress_rule1 = {
+                                description      = "Ingress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = -1
+                                cidr_ipv4        = "0.0.0.0/0" 
+                            }
+                        }   
+                        egress_obj_list = {
+                            egress_rule1 = { 
+                                description      = "Egress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = "-1"
+                                cidr_ipv4        = "0.0.0.0/0"
+                                //ipv6_cidr_blocks = ["::/0"]
+                            }
+                        }  
                     }                       
 
                     security_groups_list_info=  {  # VPC Security groups 
@@ -2023,8 +2227,30 @@ variable "enterprise_config" {
                                 }
                             }
                         } 
+                    }  
 
-                    }                      
+                    default_security_group_info =  {  # VPC default Security group
+                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        ingress_obj_list = {
+                            ingress_rule1 = {
+                                description      = "Ingress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = -1
+                                cidr_ipv4        = "0.0.0.0/0" 
+                            }
+                        }   
+                        egress_obj_list = {
+                            egress_rule1 = { 
+                                description      = "Egress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = "-1"
+                                cidr_ipv4        = "0.0.0.0/0"
+                                //ipv6_cidr_blocks = ["::/0"]
+                            }
+                        }  
+                    }                     
 
                     security_groups_list_info=  {  # VPC Security groups 
 
@@ -2239,7 +2465,30 @@ variable "enterprise_config" {
                                 }
                             }
                         } 
-                    }                        
+                    }  
+
+                    default_security_group_info =  {  # VPC default Security group
+                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        ingress_obj_list = {
+                            ingress_rule1 = {
+                                description      = "Ingress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = -1
+                                cidr_ipv4        = "0.0.0.0/0" 
+                            }
+                        }   
+                        egress_obj_list = {
+                            egress_rule1 = { 
+                                description      = "Egress description"
+                                from_port        = 0
+                                to_port          = 0
+                                protocol         = "-1"
+                                cidr_ipv4        = "0.0.0.0/0"
+                                //ipv6_cidr_blocks = ["::/0"]
+                            }
+                        }  
+                    }                      
 
                     security_groups_list_info=  {  # VPC Security groups 
 

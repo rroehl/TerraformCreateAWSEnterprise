@@ -36,7 +36,7 @@ locals {
         vpc_enable_dns_hostnames = vpc_obj.vpc_enable_dns_hostnames 
         vpc_uuid = vpc_obj.vpc_uuid   
         default_rt_uuid = vpc_obj.default_rt_uuid 
-        default_sg_uuid = vpc_obj.default_sg_uuid 
+        default_sg_uuid = vpc_obj.default_security_group_info.default_sg_uuid 
         default_netacl_uuid = vpc_obj.default_netacl_uuid 
         /*vpc_instance_tenancy = vpc_obj.vpc_instance_tenancy
 				vpc_enable_classiclink_dns_support = vpc_obj.vpc_enable_classiclink_dns_support
@@ -150,4 +150,79 @@ resource "aws_vpc_ipv4_cidr_block_association" "secondary_cidr" {
     }
    vpc_id     = lookup(aws_vpc.this, "${each.value.vpc_name}").id 
    cidr_block = each.value.secondary_cidr
+}
+
+//Get the VPCs Default security group ingress rules from structure
+locals {
+  vpcs_security_group_ingress_rules =  flatten([
+    for region_key, region_obj in module.enterprise_config_module.enterprise_config : [
+      for vpc_key, vpc_obj in region_obj.vpc_info :  [
+        for rule_key, rule_object in vpc_obj.default_security_group_info.ingress_obj_list : {
+          vpc_region_name = region_key
+          vpc_name = vpc_key
+        
+          rule_name        = rule_key
+          description      = rule_object.description
+          from_port        = rule_object.from_port
+          to_port          = rule_object.to_port
+          protocol         = rule_object.protocol 
+          cidr_ipv4        = rule_object.cidr_ipv4
+        }
+      ]
+    ]
+  ])
+}
+//Create Default Security group ingress rules
+resource "aws_vpc_security_group_ingress_rule" "this" {
+
+    for_each = {
+        for list in local.vpcs_security_group_ingress_rules : "Region: ${list.vpc_region_name} VPC: ${list.vpc_name} Rule name: ${list.rule_name}" => list if list.vpc_region_name == var.vpc_region
+    }
+      security_group_id = lookup(aws_default_security_group.this, "${each.value.vpc_name}").id    
+      description = each.value.description
+      cidr_ipv4   = each.value.cidr_ipv4
+      from_port   = each.value.from_port
+      ip_protocol = each.value.protocol
+      to_port     = each.value.to_port
+      tags = {
+        Name = each.value.rule_name
+      }
+}
+
+//Get the VPCs default security group egress rules from structure
+locals {
+  vpcs_security_group_egress_rules =  flatten([
+    for region_key, region_obj in module.enterprise_config_module.enterprise_config : [
+      for vpc_key, vpc_obj in region_obj.vpc_info :  [
+        for rule_key, rule_object in vpc_obj.default_security_group_info.egress_obj_list : {
+          vpc_region_name = region_key
+          vpc_name = vpc_key
+        
+          rule_name        = rule_key
+          description      = rule_object.description
+          from_port        = rule_object.from_port
+          to_port          = rule_object.to_port
+          protocol         = rule_object.protocol 
+          cidr_ipv4        = rule_object.cidr_ipv4 
+        }
+      ]
+    ]
+  ])
+}
+
+//Create default Security group egress rules
+resource "aws_vpc_security_group_egress_rule" "this" {
+
+    for_each = {
+         for list in local.vpcs_security_group_egress_rules : "Region: ${list.vpc_region_name} VPC: ${list.vpc_name} Rule name: ${list.rule_name}" => list if list.vpc_region_name == var.vpc_region
+    }
+      security_group_id = lookup(aws_default_security_group.this, "${each.value.vpc_name}").id 
+      description = each.value.description
+      cidr_ipv4   = each.value.cidr_ipv4
+      from_port   = each.value.from_port
+      ip_protocol = each.value.protocol
+      to_port     = each.value.to_port
+      tags = {
+        Name = each.value.rule_name
+      }
 }
