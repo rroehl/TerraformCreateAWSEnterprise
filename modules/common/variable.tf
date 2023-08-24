@@ -1499,21 +1499,6 @@ variable "enterprise_config" {
                         }   
                     }
 
-
-                   // route_table_info =  {
-
-                     //   route_table_1 = {
-                       //     Type1 = [
-						//		"1","2","13"
-			//					]
-              //          },
-                //         route_table_2 = {
-                  //          Type2 = [
-					//			"4","5","6"
-					//			]
-                      //  }
-                  //  },
-
 					az_info = {
 
 						us-east-2a = { # Availability Zone
