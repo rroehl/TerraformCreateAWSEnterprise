@@ -1,3 +1,12 @@
+variable configuration {
+    type = object({  
+    structure_version = string    #Data structure version
+    })
+    default = {
+        structure_version = "0.1"
+    }
+}
+
 variable "enterprise_config" {
   description = "Region maps"
   // Outer Region
@@ -8,6 +17,7 @@ variable "enterprise_config" {
   // outer map value: inner map
   // inner map key: subnet type
   // inner map value : subnet list
+
   type = map(  											#region
 		object({   										#Region contents
 
@@ -36,7 +46,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = bool
                     vpc_uuid = string        //Resource UUID
                     default_rt_uuid = string //Default route table UUID
-    
                     default_netacl_uuid = string //Default network acl UUID
 				/*	vpc_instance_tenancy = string
 					vpc_enable_classiclink_dns_support = bool
@@ -179,7 +188,6 @@ variable "enterprise_config" {
                             cidr_entry = "10.51.3.0/24"
                             cidr_description = "Production Public us-west-2a VPC CIDR"
                         }
-
                     }
                 },
                 ProdVPC_CIDRlist  = {
@@ -195,9 +203,7 @@ variable "enterprise_config" {
                             cidr_entry = "10.54.128.0/24"
                             cidr_description = " short Description"
                         }
-
                     }
-
                 },
                 TestVPC_CIDRlist  = {
                    address_family = "IPv4"
@@ -259,7 +265,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = true
                     vpc_uuid = "b5f01daa-f634-46c4-bc17-243ea0dec212"
                     default_rt_uuid = "8b7feed0-91b4-486e-8b27-4328dae34e23"
-                    default_sg_uuid = "4d49f4a9-7660-4288-a52b-8ecda51b0135"
                     default_netacl_uuid = "5fe4b3af-9203-4a31-98dd-68e22bf3de21"
 					/*vpc_instance_tenancy = "default"
 					vpc_enable_classiclink_dns_support = false
@@ -273,7 +278,7 @@ variable "enterprise_config" {
                     }      
              
                     default_security_group_info =  {  # VPC default Security group
-                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        default_sg_uuid = "4d49f4a9-7660-4288-a52b-8ecda51b0135"
                         ingress_obj_list = {
                             ingress_rule1 = {
                                 description      = "Ingress description"
@@ -444,7 +449,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = true
                     vpc_uuid = "0cea34d1-8602-430b-bfdf-3f9529882dc9"
                     default_rt_uuid = "606fddc9-5923-4001-af5a-111f471a5994"
-                    default_sg_uuid = "c0765a43-e6f1-403c-ba8e-065b89b96052"
                     default_netacl_uuid = "7da41cad-7915-4649-943f-a821fd5846c0"
 					/*vpc_instance_tenancy = "default"
 					vpc_enable_classiclink_dns_support = false
@@ -458,7 +462,7 @@ variable "enterprise_config" {
                     }  
 
                     default_security_group_info =  {  # VPC default Security group
-                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        default_sg_uuid = "c0765a43-e6f1-403c-ba8e-065b89b96052"
                         ingress_obj_list = {
                             ingress_rule1 = {
                                 description      = "Ingress description"
@@ -621,7 +625,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = true
                     vpc_uuid = "f8010eff-d22b-4e15-8533-4283be6ba65a"
                     default_rt_uuid = "6ce519ba-f718-4574-81f8-ebeaaa983227"
-                    default_sg_uuid = "2869a757-53e9-4129-9dbd-5425de8f911f"
                     default_netacl_uuid = "a6d77e80-9931-4121-8bdc-64b2ce627c60"
 					/*vpc_instance_tenancy = "default"
 					vpc_enable_classiclink_dns_support = false
@@ -635,7 +638,7 @@ variable "enterprise_config" {
                     }
  
                     default_security_group_info =  {  # VPC default Security group
-                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        default_sg_uuid = "2869a757-53e9-4129-9dbd-5425de8f911f"
                         ingress_obj_list = {
                             ingress_rule1 = {
                                 description      = "Ingress description"
@@ -798,7 +801,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = true
                     vpc_uuid = "69504008-8545-4023-a227-d3263393c84a"
                     default_rt_uuid = "be09f266-9100-4c61-b7b6-e05cfa86ac2d"
-                    default_sg_uuid = "b7c3845d-8391-49f4-8599-eb70d53cd667"
                     default_netacl_uuid = "4a4e4905-be92-4ff8-931e-e3d0c1373d60"
 					/*vpc_instance_tenancy = "default"
 					vpc_enable_classiclink_dns_support = false
@@ -812,7 +814,7 @@ variable "enterprise_config" {
                     } 
 
                     default_security_group_info =  {  # VPC default Security group
-                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        default_sg_uuid = "b7c3845d-8391-49f4-8599-eb70d53cd667"
                         ingress_obj_list = {
                             ingress_rule1 = {
                                 description      = "Ingress description"
@@ -950,7 +952,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = true
                     vpc_uuid = "3c931519-0fe9-4080-a729-5490397d8785"
                     default_rt_uuid = "50a01a33-6ea1-413e-8c3b-cc66139e506c"
-                    default_sg_uuid = "414e015a-f0e9-486a-a386-3df8bf0740c4"
                     default_netacl_uuid = "537c95d6-8979-444d-ba23-bc7bede5be6e"
 					/*vpc_instance_tenancy = "default"
 					vpc_enable_classiclink_dns_support = false
@@ -965,7 +966,7 @@ variable "enterprise_config" {
                     }   
 
                     default_security_group_info =  {  # VPC default Security group
-                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        default_sg_uuid = "414e015a-f0e9-486a-a386-3df8bf0740c4"
                         ingress_obj_list = {
                             ingress_rule1 = {
                                 description      = "Ingress description"
@@ -1307,7 +1308,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = true
                     vpc_uuid = "5f68a866-029b-4ed3-a91b-657fb47fe89e"
                     default_rt_uuid = "f54ade67-59ff-44f0-85de-b706f317b53b"
-                    default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
                     default_netacl_uuid = "88e5f179-f7e7-4225-9ac9-519e5c861c2e"
 					/*vpc_instance_tenancy = "default"
 					vpc_enable_classiclink_dns_support = false
@@ -1329,7 +1329,7 @@ variable "enterprise_config" {
                         }                     
                     }     
 
-                     network_acls_list_info = {  // These are the network accles for the VPC
+                    network_acls_list_info = {  // These are the network accles for the VPC
                         Public_network_acls = {  // 
                             description = "For prod VPC, this will route all traffic between the public networks in the VPC"
                             netacl_uuid = "be954d7b-046f-49ab-b36f-ab8bf6a9f572"  //Network Acl UUID
@@ -1408,7 +1408,7 @@ variable "enterprise_config" {
                     }       
 
                     default_security_group_info =  {  # VPC default Security group
-                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        default_sg_uuid = "a2684368-b8cd-4cbf-8dd3-7b36f9a62b6d"
                         ingress_obj_list = {
                             ingress_rule1 = {
                                 description      = "Ingress description"
@@ -1601,7 +1601,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = true
                     vpc_uuid = "dda69f2e-7e96-481a-88a1-5101dc1a1b6e"
                     default_rt_uuid = "01272144-0319-4de7-b79e-72c304f1d69d"
-                    default_sg_uuid = "29a99c68-a689-41eb-b80b-25bafe7a8db7"
                     default_netacl_uuid = "948420e5-92ba-4591-988d-2b29d1f97d16"
 					/*vpc_instance_tenancy = "default"
 					vpc_enable_classiclink_dns_support = false
@@ -1703,7 +1702,7 @@ variable "enterprise_config" {
                     }  
 
                     default_security_group_info =  {  # VPC default Security group
-                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        default_sg_uuid = "29a99c68-a689-41eb-b80b-25bafe7a8db7"
                         ingress_obj_list = {
                             ingress_rule1 = {
                                 description      = "Ingress description"
@@ -1864,7 +1863,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = true
                     vpc_uuid = "b5f25cb3-5785-4673-a7e7-5bfeb2994f4a"
                     default_rt_uuid = "1ad39b39-d48f-4869-930f-53a9b29d0693"
-                    default_sg_uuid = "360204d5-9c09-402c-b7ff-b8238e8c3562"
                     default_netacl_uuid = "39bdfe8d-1569-4e0a-913c-4bef32a9049a"
 					/*vpc_instance_tenancy = "default"
 					vpc_enable_classiclink_dns_support = false
@@ -1965,7 +1963,7 @@ variable "enterprise_config" {
                     } 
 
                     default_security_group_info =  {  # VPC default Security group
-                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        default_sg_uuid = "9cfdbc7d-aeb0-4625-9bbf-320db8dbbfb6"
                         ingress_obj_list = {
                             ingress_rule1 = {
                                 description      = "Ingress description"
@@ -2115,7 +2113,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = true
                     vpc_uuid = "8d17ad35-ad3c-43aa-86b4-fee6dfc224fd"
                     default_rt_uuid = "80e5fca2-72e5-453f-abca-be8d5ec305a4"
-                    default_sg_uuid = "11ba83d0-925f-4437-8a1b-79afa6485281"
                     default_netacl_uuid = "4dae3f26-8b5f-48de-acbf-872763ca6d55"
 					/*vpc_instance_tenancy = "default"
 					vpc_enable_classiclink_dns_support = false
@@ -2215,7 +2212,7 @@ variable "enterprise_config" {
                     }  
 
                     default_security_group_info =  {  # VPC default Security group
-                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        default_sg_uuid = "68440a0f-1de0-4630-b586-4755d77b842f"
                         ingress_obj_list = {
                             ingress_rule1 = {
                                 description      = "Ingress description"
@@ -2353,7 +2350,6 @@ variable "enterprise_config" {
 					vpc_enable_dns_hostnames = true
                     vpc_uuid = "b9c2e117-472b-429d-a767-3c23e0dea689"
                     default_rt_uuid = "fc34688b-189c-4949-86dc-0fde7f00ae36"
-                    default_sg_uuid = "c09f12e5-0b35-465f-80bc-705f7c11e878"
                     default_netacl_uuid = "d7246aeb-fece-448e-aa19-fb4b4a94f43e"
 					/*vpc_instance_tenancy = "default"
 					vpc_enable_classiclink_dns_support = false
@@ -2453,7 +2449,7 @@ variable "enterprise_config" {
                     }  
 
                     default_security_group_info =  {  # VPC default Security group
-                        default_sg_uuid = "61fd47f4-6e64-4af6-842d-a38c3b1e34bb"
+                        default_sg_uuid = "0056a65b-ea9d-4602-b63e-2e09f5bd52f5"
                         ingress_obj_list = {
                             ingress_rule1 = {
                                 description      = "Ingress description"

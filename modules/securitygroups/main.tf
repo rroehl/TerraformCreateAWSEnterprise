@@ -68,26 +68,25 @@ locals {
   vpcs_security_group_ingress_rules =  flatten([
     for region_key, region_obj in module.enterprise_config_module.enterprise_config : [
       for vpc_key, vpc_obj in region_obj.vpc_info :  [
-            for security_group_list_key, security_group_list_obj in vpc_obj.security_groups_list_info : [
-              for rule_key, rule_object in security_group_list_obj.ingress_obj_list : {
-                vpc_region_name = region_key
-                vpc_name = vpc_key
-                //vpc_uuid = vpc_obj.vpc_uuid
-                //vpc_environment_type = vpc_obj.vpc_environment_type
-                //vpc_cidr_block = vpc_obj.vpc_cidr_block 
-                sg_name = security_group_list_key
-                sg_description = security_group_list_obj.description
-                sg_uuid = security_group_list_obj.sg_uuid
+        for security_group_list_key, security_group_list_obj in vpc_obj.security_groups_list_info : [
+          for rule_key, rule_object in security_group_list_obj.ingress_obj_list : {
+            vpc_region_name = region_key
+            vpc_name = vpc_key
+            //vpc_uuid = vpc_obj.vpc_uuid
+            //vpc_environment_type = vpc_obj.vpc_environment_type
+            //vpc_cidr_block = vpc_obj.vpc_cidr_block 
+            sg_name = security_group_list_key
+            sg_description = security_group_list_obj.description
+            sg_uuid = security_group_list_obj.sg_uuid
 
-                rule_name  = rule_key
-                description      = rule_object.description
-                from_port        = rule_object.from_port
-                to_port          = rule_object.to_port
-                protocol         = rule_object.protocol 
-                cidr_ipv4        = rule_object.cidr_ipv4
-              }
-                
-            ]  
+            rule_name  = rule_key
+            description      = rule_object.description
+            from_port        = rule_object.from_port
+            to_port          = rule_object.to_port
+            protocol         = rule_object.protocol 
+            cidr_ipv4        = rule_object.cidr_ipv4
+          }        
+        ]  
       ]
     ]
   ])
@@ -114,23 +113,23 @@ locals {
   vpcs_security_group_egress_rules =  flatten([
     for region_key, region_obj in module.enterprise_config_module.enterprise_config : [
       for vpc_key, vpc_obj in region_obj.vpc_info :  [
-            for security_group_list_key, security_group_list_obj in vpc_obj.security_groups_list_info : [
-              for rule_key, rule_object in security_group_list_obj.egress_obj_list : {
-                vpc_region_name = region_key
-                vpc_name = vpc_key
-                sg_name = security_group_list_key
-                sg_description = security_group_list_obj.description
-                sg_uuid = security_group_list_obj.sg_uuid
+        for security_group_list_key, security_group_list_obj in vpc_obj.security_groups_list_info : [
+          for rule_key, rule_object in security_group_list_obj.egress_obj_list : {
+            vpc_region_name = region_key
+            vpc_name = vpc_key
+            sg_name = security_group_list_key
+            sg_description = security_group_list_obj.description
+            sg_uuid = security_group_list_obj.sg_uuid
 
-                rule_name  = rule_key
-                description      = rule_object.description
-                from_port        = rule_object.from_port
-                to_port          = rule_object.to_port
-                protocol         = rule_object.protocol 
-                cidr_ipv4        = rule_object.cidr_ipv4
-              }
-                
-            ]  
+            rule_name  = rule_key
+            description      = rule_object.description
+            from_port        = rule_object.from_port
+            to_port          = rule_object.to_port
+            protocol         = rule_object.protocol 
+            cidr_ipv4        = rule_object.cidr_ipv4
+          }
+            
+        ]  
       ]
     ]
   ])

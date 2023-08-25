@@ -57,11 +57,11 @@ resource "aws_network_acl" "CreateNetworkAcls" {
     subnet_ids = values(   
         {
           for key, object in data.aws_subnet.subnet_objs : key => object.id 
-                    if 
-                       (object.vpc_id == [for key, obj in values(data.aws_vpc.selected).*: obj.id  if obj.tags.uuid== "${each.value.vpc_uuid}"][0]) 
-                       && 
-                        (object.tags["Subnet Class_Type"] == each.value.subnet_type
-                      )
+              if 
+                  (object.vpc_id == [for key, obj in values(data.aws_vpc.selected).*: obj.id  if obj.tags.uuid== "${each.value.vpc_uuid}"][0]) 
+                  && 
+                  (object.tags["Subnet Class_Type"] == each.value.subnet_type
+                )
         }
     )
     tags = {
