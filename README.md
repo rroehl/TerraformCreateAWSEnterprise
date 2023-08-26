@@ -1,4 +1,4 @@
-## Teraforming AWS Enterpirse (IaC) from a Complex Variable Data Structure
+## Terraforming AWS Enterprise (IaC) from a Complex Variable Data Structure
 
 ### Objective
 
