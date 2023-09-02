@@ -177,6 +177,6 @@ The data structure hierarchical form provides the ability to inherit root resour
 
 Since the data structure is consistent and one set of code is used to Terraform resources, the resources configuration (naming and tagging) is consistent.
 
-Since the enterprise create is split into projects, some can be run concurrently (such as layer 3.0) and will improve resource creation 
+Since the enterprise create is split into projects, some can be run concurrently (such as layer 3.0) and will improve resource creation.
 
 The variable data structure becomes large and difficult to manage. However, creative ways can be created to maintain the data structure.
